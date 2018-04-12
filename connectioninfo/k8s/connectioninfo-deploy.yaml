@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: connectioninfo
+  namespace: {{ build.profile.namespace }}
+  labels:
+    app: connectioninfo
+spec:
+  replicas: {{ build.profile.replicas }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: connectioninfo
+    spec:
+      containers:
+        - name: connectioninfo
+          image: {{ build.images["Dockerfile"] }}
+          ports:
+            - name: http-api
+              containerPort: 5000

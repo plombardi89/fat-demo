@@ -1,0 +1,55 @@
+buildscript {
+    ext {
+        jacksonVersion = "2.9.3"
+        junitVersion   = "4.12"
+        logbackVersion = "1.1.7"
+        sparkjavaVersion = "2.7.2"
+    }
+
+    repositories {
+        jcenter()
+    }
+}
+
+apply plugin: "java"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = "0.1.0"
+group   = "connectioninfo"
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+dependencies {
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    compile "com.fasterxml.jackson.module:jackson-module-parameter-names:$jacksonVersion"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jacksonVersion"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+
+    compile "com.sparkjava:spark-core:$sparkjavaVersion"
+
+    testCompile "junit:junit:$junitVersion"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "4.5"
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title'   : 'Connection Info',
+                   'Implementation-Version' : version,
+                   'Main-Class'             : 'connectioninfo.Server'
+    }
+
+    version  = null
+    baseName = project.name + '-fat'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
