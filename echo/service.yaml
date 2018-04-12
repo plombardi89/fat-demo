@@ -1,5 +1,5 @@
 ---
-name: connectioninfo
+name: echo
 
 containers:
   - dockerfile: Dockerfile

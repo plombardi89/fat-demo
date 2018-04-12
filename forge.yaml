@@ -1,4 +1,6 @@
 ---
 registry:
-  type: ecr
-  region: us-east-1
+  type: docker
+  url: registry.hub.docker.com
+  namespace: plombardi89
+

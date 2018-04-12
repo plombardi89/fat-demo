@@ -2,20 +2,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: connectioninfo
+  name: echo
   namespace: {{ build.profile.namespace }}
   annotations:
     getambassador.io/config: |
       ---
       apiVersion: ambassador/v0
       kind: Mapping
-      name: connectioninfo-{{ build.profile.namespace }}
+      name: echo-{{ build.profile.namespace }}
       prefix: /
-      host: connectioninfo-{{ build.profile.namespace }}.datawire.io
-      service: connectioninfo.{{ build.profile.namespace }}
+      host: echo-{{ build.profile.namespace }}.datawire.io
+      service: echo.{{ build.profile.namespace }}
 spec:
   selector:
-    app: connectioninfo
+    app: echo
   type: ClusterIP
   ports:
     - name: http-api

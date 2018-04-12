@@ -2,10 +2,10 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: connectioninfo
+  name: echo
   namespace: {{ build.profile.namespace }}
   labels:
-    app: connectioninfo
+    app: echo
 spec:
   replicas: {{ build.profile.replicas }}
   strategy:
@@ -13,10 +13,10 @@ spec:
   template:
     metadata:
       labels:
-        app: connectioninfo
+        app: echo
     spec:
       containers:
-        - name: connectioninfo
+        - name: echo
           image: {{ build.images["Dockerfile"] }}
           ports:
             - name: http-api
